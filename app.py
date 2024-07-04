@@ -40,7 +40,7 @@ class NoteIdentifier:
 
 # usage
 if __name__ == "__main__":
-    pkl_file_path = 'model.pkl' #https://huggingface.co/roshnjames/currency_classifier.pkl
+    pkl_file_path = 'model.pkl' # https://huggingface.co/roshnjames/currency_classifier.pkl
     rupee_type = '20back' # change this to your preference
     image_path = f'images/image{rupee_type}.jpg'
     vit_model_name = 'google/vit-base-patch16-224-in21k'
