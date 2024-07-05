@@ -6,8 +6,13 @@ import os
 
 from identifier import NoteIdentifier
 
-# Create the "inference" folder if it doesn't exist
+model_file_path = 'model.pkl'
+vit_model_name='google/vit-base-patch16-224-in21k'
+target_class_name = "book" # YOLO identifies banknotes as book
+saved_image_name = 'note_image.jpg'
 output_folder = "inference"
+
+# Create the "inference" folder if it doesn't exist
 os.makedirs(output_folder, exist_ok=True)
 
 # start webcam
@@ -51,7 +56,7 @@ while True:
             # class name
             cls = int(box.cls[0])
 
-            if cls < len(classNames) and classNames[cls] == "book":
+            if cls < len(classNames) and classNames[cls] == target_class_name:
                 # draw a rectangle
                 cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
 
@@ -64,12 +69,12 @@ while True:
 
                 # Save the image to the "inference" folder
                 cropped_img = img[y1:y2, x1:x2]
-                image_path = os.path.join(output_folder, 'note_image.jpg')
+                image_path = os.path.join(output_folder, saved_image_name)
                 cv2.imwrite(image_path, cropped_img)
 
                 # call the identifier model
-                note_identifier = NoteIdentifier(pkl_file_path='model.pkl', 
-                                                 vit_model_name='google/vit-base-patch16-224-in21k')
+                note_identifier = NoteIdentifier(pkl_file_path=model_file_path, 
+                                                 vit_model_name=vit_model_name)
                 predicted_class_str = note_identifier.get_prediction(image_path)
 
                 # cv2.putText(img, classNames[cls], org, font, fontScale, color, thickness)
