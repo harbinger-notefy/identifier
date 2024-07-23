@@ -58,7 +58,7 @@ while True:
             # class name
             cls = int(box.cls[0])
 
-            if cls < len(classNames) and classNames[cls] == target_class_name:
+            if cls < len(classNames) and classNames[cls] in classNames:
                 # draw a rectangle
                 cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
 
